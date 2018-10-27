@@ -1,7 +1,21 @@
 ---
-title: "Holy cow!"
+title: "Guojing's personal website"
 ---
 
-### I have a webpage!
+### Want to know more of me? Check [here](resume.html)
 
-And I can put all kinds of stuff on it!
+### So are you a cat person or a dog person?
+
+You know what? I don't care! 
+
+They are both great!
+
+<img src="image/dog_cat.jpg">
+
+<img src="image/cat_roll.jpg">
+
+<img src="image/palm_press.jpeg">
+
+<img src="image/panel_husky.jpg">
+
+<img src="image/son_husky.jpg">
