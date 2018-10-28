@@ -2,7 +2,15 @@
 title: "Guojing's personal website"
 ---
 
-### Want to know more of me? Check [here](resume.html)
+***
+
+### Want to know more of me? Check [my resume](resume.html)
+
+***
+
+
+
+***
 
 ### So are you a cat person or a dog person?
 
