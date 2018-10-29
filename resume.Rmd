@@ -7,7 +7,70 @@ author: "Guojing Wu"
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r}
-knitr::include_graphics("image/commonCV.pdf")
-```
+### personal info
 
+Name:Guojing Wu
+
+Citizenship: China
+
+Cellphone: +1 929-319-8891
+
+E-mail: gw2383@cumc.columbia.edu
+
+***
+
+### education background
+
+Shanghai Jiao Tong University 
+
+* Time:2013 ~ 2017 
+
+* Major:Bioinformatics 
+
+* Degree:Bachelor of Science 
+
+* GPA:3.36/4.0
+
+Award:
+
+* Academic Progress Scholarship Academic 
+
+* Excellence Scholarship 
+
+* Annual Outstanding Intern
+
+***
+
+### Research and intern
+
+#### bioinformatics
+
+Internship in Industry: 
+
+* *(Jiaofu Research Company, 2017.7 - 2017.10)* Developed transcriptomics microarray analyze pipeline for TCGA tumor data, including differential expression analysis and mRNA-microRNA-lncRNA/circRNA coexpression network.
+
+Research Assistant:
+
+* *(Prof. Li Lab in SJTU, 2015.9 - 2017.9)* Participated in bioinformatics research, learned the basic analyze pipeline and software. Got to know MS-based high throughput technologies.
+
+Syndrome Biomarker Detect:
+
+* *(Prof. Zhao Lab in SJTU, 2016.9 - 2017.2)* Cooperatively discovered metabolic biomarkers and pathways in Angelman Syndrome and Prader-Willi Syndrome. Learned how to use online tool XCMS.
+
+Proteogenomics Program:
+
+* *(Prof. Li Lab in SJTU, 2016.10 - 2017.9)* Participated in the integrated proteogenomic characterization of cancers. Did multi-feature clustering, and protein coexpression network analysis in big-data research.
+
+#### biostatistics
+
+Statistical Model Comparison:
+
+* *(Prof. Li Lab in SJTU, 2015.12 - 2017.12)* Took the whole process of proposing a biological network module-based zero-augmented generalized linear model for differential expression analysis of spectral count data.
+
+R Software Development:
+
+* *(Prof. Li Lab in SJTU, 2016.10 - 2017.12)* Leaded a 3-member team to implement an integrated R software that can identify differentially expressed modules through a specific pipeline, also provided visualized output.
+
+Rice PPI Database:
+
+* *(Prof. Li Lab in SJTU, 2017.11 - 2018.2)* Took in charge of refining the Naïve Bayesian classifier and database, was going to put more resources to the classifier and optimize the user interface.
