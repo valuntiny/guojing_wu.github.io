@@ -1,0 +1,80 @@
+---
+title: "flexdashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(viridis)
+## Loading required package: viridisLite
+library(p8105.datasets)
+library(plotly)
+```
+
+```{r}
+set.seed(1)
+
+data(nyc_airbnb)
+nyc_airbnb = 
+  nyc_airbnb %>% 
+  mutate(rating = review_scores_location / 2) %>%
+  select(boro = neighbourhood_group, neighbourhood, rating, price, room_type, latitude, longitude) %>%
+  filter(!is.na(rating), 
+         boro == "Manhattan",
+         room_type == "Entire home/apt",
+         price %in% 100:500)  %>% 
+  sample_n(5000) # data still large, take randomly 5000 results
+
+insta_df = p8105.datasets::instacart %>% 
+  janitor::clean_names()
+```
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Chart A
+
+```{r}
+reorder_size <- function(x) {
+  factor(x, levels = names(sort(table(x))))
+}
+
+insta_df %>% 
+  select(aisle) %>% 
+  reorder_size() %>% 
+  plot_ly(y = ~reorder_size(aisle), color = ~aisle, type = "bar")
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Chart B
+
+```{r}
+common_neighborhoods =
+  nyc_airbnb %>% 
+  count(neighbourhood, sort = TRUE) %>% 
+  top_n(8) %>% 
+  select(neighbourhood)
+## Selecting by n
+
+inner_join(nyc_airbnb, common_neighborhoods,
+             by = "neighbourhood") %>% 
+  mutate(neighbourhood = fct_reorder(neighbourhood, price)) %>% 
+  plot_ly(y = ~price, color = ~neighbourhood, type = "box",
+          colors = "Set2")
+```
+
+### Chart C
+
+```{r}
+nyc_airbnb %>% 
+  count(neighbourhood) %>% 
+  mutate(neighbourhood = fct_reorder(neighbourhood, n)) %>% 
+  plot_ly(x = ~neighbourhood, y = ~n, color = ~neighbourhood, type = "bar")
+```
+
