@@ -18,19 +18,13 @@ library(plotly)
 ```{r}
 set.seed(1)
 
-data(nyc_airbnb)
-nyc_airbnb = 
-  nyc_airbnb %>% 
-  mutate(rating = review_scores_location / 2) %>%
-  select(boro = neighbourhood_group, neighbourhood, rating, price, room_type, latitude, longitude) %>%
-  filter(!is.na(rating), 
-         boro == "Manhattan",
-         room_type == "Entire home/apt",
-         price %in% 100:500)  %>% 
-  sample_n(5000) # data still large, take randomly 5000 results
-
 insta_df = p8105.datasets::instacart %>% 
   janitor::clean_names()
+
+noaa_df = p8105.datasets::ny_noaa %>% 
+  janitor::clean_names() %>% 
+  mutate(prcp = as.numeric(prcp)/10, tmax = as.numeric(tmax)/10, tmin = as.numeric(tmin)/10) %>% # change the unit
+  rename(prcp_in_mm = prcp, snow_in_mm = snow, snwd_in_mm = snwd, tmax_in_celsius = tmax, tmin_in_celsius = tmin)
 ```
 
 Column {data-width=650}
@@ -39,14 +33,22 @@ Column {data-width=650}
 ### Chart A
 
 ```{r}
-reorder_size <- function(x) {
-  factor(x, levels = names(sort(table(x))))
-}
-
-insta_df %>% 
-  select(aisle) %>% 
-  reorder_size() %>% 
-  plot_ly(y = ~reorder_size(aisle), color = ~aisle, type = "bar")
+noaa_df %>% 
+  filter(tmin_in_celsius != "NA") %>% 
+  filter(tmax_in_celsius != "NA") %>%
+  group_by(id) %>% 
+  summarise(mean_tmin = mean(tmin_in_celsius), 
+            mean_tmax = mean(tmax_in_celsius), 
+            mean_prcp = mean(prcp_in_mm, na.rm = T)) %>%
+  plot_ly(x = ~mean_tmin, y = ~mean_tmax, type = "scatter", mode = "markers", 
+          alpha = 0.5, 
+          text = ~id, 
+          color = ~mean_prcp) %>% 
+  layout(
+    title = "stations and their mean tmin and mean tmax from 1981 to 2010", 
+    xaxis = list(title = "mean tmin (Celsius)"), 
+    yaxis = list(title = "mean tmax (Celsius)")
+    )
 ```
 
 Column {data-width=350}
@@ -55,26 +57,26 @@ Column {data-width=350}
 ### Chart B
 
 ```{r}
-common_neighborhoods =
-  nyc_airbnb %>% 
-  count(neighbourhood, sort = TRUE) %>% 
-  top_n(8) %>% 
-  select(neighbourhood)
-## Selecting by n
-
-inner_join(nyc_airbnb, common_neighborhoods,
-             by = "neighbourhood") %>% 
-  mutate(neighbourhood = fct_reorder(neighbourhood, price)) %>% 
-  plot_ly(y = ~price, color = ~neighbourhood, type = "box",
-          colors = "Set2")
+insta_df %>% 
+  count(department) %>%
+  mutate(department = fct_reorder(department, n)) %>% 
+  plot_ly(x = ~department, y = ~n, color = ~department, type = "bar") %>% 
+  layout(
+    title = "total number of items ordered in each department", 
+    yaxis = list(title = "# of items ordered")
+  )
 ```
 
 ### Chart C
 
 ```{r}
-nyc_airbnb %>% 
-  count(neighbourhood) %>% 
-  mutate(neighbourhood = fct_reorder(neighbourhood, n)) %>% 
-  plot_ly(x = ~neighbourhood, y = ~n, color = ~neighbourhood, type = "bar")
+noaa_df %>% 
+  filter(tmax_in_celsius != "NA") %>%
+  separate(date, into = c("year", "month", "day"), sep = "-") %>% # separate the date
+  plot_ly(x = ~year, y = ~tmax_in_celsius, type = "box", color = ~year) %>% 
+  layout(
+    yaxis = list(title = "max temperature (Celsius)"), 
+    title = "max temperature across years"
+  )
 ```
 
