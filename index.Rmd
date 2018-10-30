@@ -8,7 +8,7 @@ title: "Guojing's personal website"
 
 ***
 
-### An example of [flexdashboard](flexdashboard.html)
+### An example of [flexdashboard](flexdashboard/flexdashboard.html)
 
 ***
 
